@@ -1,2 +1,2 @@
-# SalysIrMiestai
+# Countries and Cities
 php/mysql
