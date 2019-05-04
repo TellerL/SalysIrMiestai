@@ -32,7 +32,7 @@ USE `database_123456789`;
 
 CREATE TABLE `apps_countries` (
   `id` int(11) NOT NULL,
-  `country_code` varchar(2) NOT NULL DEFAULT '',
+  `country_code` varchar(3) NOT NULL DEFAULT '',
   `country_name` varchar(100) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -238,7 +238,7 @@ INSERT INTO `apps_countries` (`id`, `country_code`, `country_name`) VALUES
 CREATE TABLE `cities` (
   `id` int(11) NOT NULL,
   `city_name` varchar(100) NOT NULL,
-  `countryID` int(11) NOT NULL
+  `countryID` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
