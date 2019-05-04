@@ -21,7 +21,6 @@ include('dbconnect.php');
 </style>
 </head>
 <body bgcolor="#FFF5EE">
-
 <?php
 include('header1.php');
 //paping
@@ -69,10 +68,9 @@ $result = mysqli_query($con, $sql);
       }
         else
         {
-            ?><span class="error"> <?php echo "<br> If you want to delete, you must check the Pažymėti <br>";;?></span><?php
+            ?><span class="error"> <?php echo "<br> Jeigu norite ištrinti turite pažymėti <br>";?></span><?php
         }
     }
-
 if( $number_of_results > 0)
 {
   ?>
@@ -134,6 +132,5 @@ else
       ?>
   </p>
 </div>
-
 </body>
 </html>

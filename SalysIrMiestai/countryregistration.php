@@ -9,10 +9,8 @@
 <body>
 <?php
 include('dbconnect.php');
-
  $countynameisErr=$countrycodeisErr="";
 ?>
-
   <br>
   <div align="center">
     <h2>Šalies pridėjimas į duomenų bazę</h2>
@@ -30,22 +28,31 @@ include('dbconnect.php');
   </div>
 </body>
 </html>
-
 <?php
 $startregister = 0;
 if (isset($_POST['submit']))
 {
-  if (empty($_POST["countryname"]))
+  if (empty(trim($_POST["countryname"])))
 		{
-       echo "Šalies pavadinimas yra privalomas! ";
+       echo "<p> Šalies pavadinimas yra privalomas! <p>";
 		}
 	else
 		{
 		  $countynameis = $_POST['countryname'];
-			if (!preg_match("/^[a-zA-Z ]*$/",$countynameis))
+			if (!preg_match("/^[a-z A-Z]*$/",$countynameis))
 			{
-				echo "Neteisingai ivedėte šalies pavadinimą! ";
+				echo "<p> Neteisingai ivedėte šalies pavadinimą, ją gali sudaryti tik raidės ir tarpai! <p>";
 			}
+      elseif ( strlen($countynameis) < 2 )
+      {
+        echo "<p> Neteisingai ivedėte šalies pavadinimą, jis negali buti toks trumpas! <p>";
+        $startregister--;
+      }
+      elseif ( strlen($countynameis) > 100)
+      {
+        echo "<p> Neteisingai ivedėte šalies pavadinimą, jis negali buti toks ilgas! <p>";
+        $startregister--;
+      }
 			else
       {
 				$startregister++;
@@ -53,15 +60,20 @@ if (isset($_POST['submit']))
     }
     if (empty($_POST["countrycode"]))
   		{
-         echo "Šalies kodas yra privalomas!";
+         echo "<p> Šalies kodas yra privalomas! <p>";
   		}
     else
     	{
         $countrycodeis = $_POST['countrycode'];
-    		if (!preg_match("/^[a-zA-Z ]*$/",$countrycodeis))
+    		if (!preg_match("/^[a-zA-Z]*$/",$countrycodeis))
     		{
-    			echo "Neteisingai ivedėte šalies koda!";
+    			echo "<p> Neteisingai ivedėte šalies koda! <p>";
     		}
+        elseif ( strlen($countrycodeis) > 3 || strlen($countrycodeis) < 2 )
+        {
+          echo "<p> Neteisingai ivedėte šalies koda, jį gali sudaryti nuo dviejų iki trijų raidžių! <p> ";
+          $startregister--;
+        }
     		else
         {
     			$startregister++;
@@ -82,20 +94,37 @@ if ( isset($_POST['submit']) && $startregister == 2)
   {
     die("Connect failed:" . mysqli_connect_error());
   }
-  $sql = "INSERT INTO apps_countries (country_name,  country_code) VALUES ('$countynameEND', '$countrycodeEND')";
-  if (mysqli_query($con, $sql))
+  $sql5 = "SELECT * FROM apps_countries WHERE country_name='$countynameEND' OR country_code='$countrycodeEND'";
+  if($sameresults = mysqli_query($con, $sql5))
   {
-    echo "<br> Duomenys buvo sėkmingai įvesti <br>";
+      $number_of_same_results = mysqli_num_rows($sameresults);
   }
-  else {
-    include('dbcreating.php'); // nezinau ar gerai
-    if(mysqli_query($conect2, $sql))
+  else
+  {
+    $number_of_same_results = 0;
+  }
+  if ( $number_of_same_results > 0 )
+  {
+    echo "<p> Šalis tokiu pavadinimu ar kodu jau yra duomenų bazėje! <p>";
+  }
+  else
+  {
+    $sql6 = "INSERT INTO apps_countries (country_name,  country_code) VALUES ('$countynameEND', '$countrycodeEND')";
+    if (mysqli_query($con, $sql6))
     {
       echo "<br> Duomenys buvo sėkmingai įvesti <br>";
     }
     else
     {
-      echo "<br> Erroe: " . $sql . "<br>" . mysqli_error($conect2);
+      include('dbcreating.php'); // nezinau ar gerai
+      if(mysqli_query($conect2, $sql6))
+      {
+        echo "<br> Duomenys buvo sėkmingai įvesti <br>";
+      }
+      else
+      {
+        echo "<br> Erroe: " . $sql6 . "<br>" . mysqli_error($conect2);
+      }
     }
   }
   mysqli_close($con);

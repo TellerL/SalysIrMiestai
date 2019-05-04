@@ -3,7 +3,7 @@ $conect = mysqli_connect("localhost","root","");
 $query = "CREATE DATABASE database_123456789";
 $query1 = "CREATE TABLE apps_countries (
   id int(11) NOT NULL AUTO_INCREMENT,
-  country_code varchar(2) NOT NULL DEFAULT '',
+  country_code varchar(3) NOT NULL DEFAULT '',
   country_name varchar(100) NOT NULL DEFAULT '',
   PRIMARY KEY (id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

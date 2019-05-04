@@ -14,7 +14,6 @@ $file2=fopen("countryindex.txt" , "r");
 $data2=file("countryindex.txt");
 $countryisid2 = implode($data2);
 ?>
-
   <br>
   <div align="center">
     <h2>Miesto pridėjimas į duomenų bazę</h2>
@@ -32,21 +31,20 @@ $countryisid2 = implode($data2);
   </div>
 </body>
 </html>
-
 <?php
 $startregister4 = 0;
 if (isset($_POST['submit']))
 {
-  if (empty($_POST["cityname"]))
+  if (empty(trim($_POST["cityname"])))
 		{
-       echo "Miesto pavadinimas yra privalomas! ";
+       echo "<p> Miesto pavadinimas yra privalomas! <p>";
 		}
 	else
 		{
 		  $citynameis = $_POST['cityname'];
 			if (!preg_match("/^[a-zA-Z ]*$/",$citynameis))
 			{
-				echo "Neteisingai ivedėte miesto pavadinimą! ";
+				echo "<p> Neteisingai ivedėte miesto pavadinimą! <p>";
 			}
 			else
       {
