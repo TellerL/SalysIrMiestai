@@ -11,7 +11,7 @@ $query1 = "CREATE TABLE apps_countries (
 $query2 = "CREATE TABLE cities (
   id int(11) NOT NULL AUTO_INCREMENT,
   city_name varchar(100) NOT NULL,
-  countryID int(3) NOT NULL,
+  countryID int(11) NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 ";

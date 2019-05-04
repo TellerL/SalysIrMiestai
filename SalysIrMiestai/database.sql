@@ -238,7 +238,7 @@ INSERT INTO `apps_countries` (`id`, `country_code`, `country_name`) VALUES
 CREATE TABLE `cities` (
   `id` int(11) NOT NULL,
   `city_name` varchar(100) NOT NULL,
-  `countryID` int(3) NOT NULL
+  `countryID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
