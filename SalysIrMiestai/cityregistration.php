@@ -46,6 +46,16 @@ if (isset($_POST['submit']))
 			{
 				echo "<p> Neteisingai ivedėte miesto pavadinimą! <p>";
 			}
+      elseif ( strlen($citynameis) < 2 )
+      {
+        echo "<p> Neteisingai ivedėte miesto pavadinimą, jis negali buti toks trumpas! <p>";
+        $startregister4--;
+      }
+      elseif ( strlen($citynameis) > 100)
+      {
+        echo "<p> Neteisingai ivedėte miesto pavadinimą, jis negali buti toks ilgas! <p>";
+        $startregister4--;
+      }
 			else
       {
 				$startregister4++;
@@ -65,14 +75,30 @@ if ( isset($_POST['submit']) && $startregister4 == 1)
   {
     die("Connect failed:" . mysqli_connect_error());
   }
-  $sql4 = "INSERT INTO cities (city_name,  countryID) VALUES ('$citynameEND', '$countryisid2')";
-  if (mysqli_query($con, $sql4))
+  $sql4 = "SELECT * FROM cities WHERE countryID='$countryisid2'  AND city_name='$citynameEND' ";
+  if($sameresults4 = mysqli_query($con, $sql4))
   {
-    echo "<br> Duomenys buvo sėkmingai įvesti <br>";
+      $number_of_same_results4 = mysqli_num_rows($sameresults4);
   }
-  else {
-    echo "<br> Erroe: " . $sql4 . "<br>" . mysqli_error($con);
+  else
+  {
+    $number_of_same_results4 = 0;
   }
-  mysqli_close($con);
+  if ( $number_of_same_results4 > 0 )
+  {
+    echo "<p> Miestas tokiu pavadinimu jau yra duomenų bazėje! <p>";
+  }
+  else
+  {
+    $sql4 = "INSERT INTO cities (city_name, countryID) VALUES ('$citynameEND', '$countryisid2')";
+    if (mysqli_query($con, $sql4))
+    {
+      echo "<br> Duomenys buvo sėkmingai įvesti <br>";
+    }
+    else
+    {
+        echo "<br> Erroe: " . $sql4 . "<br>" . mysqli_error($con);
+    }
+  }
 }
  ?>

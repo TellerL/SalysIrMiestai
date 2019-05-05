@@ -41,7 +41,7 @@ if (isset($_POST['submit']))
 		  $countynameis = $_POST['countryname'];
 			if (!preg_match("/^[a-z A-Z]*$/",$countynameis))
 			{
-				echo "<p> Neteisingai ivedėte šalies pavadinimą, ją gali sudaryti tik raidės ir tarpai! <p>";
+				echo "<p> Neteisingai ivedėte šalies pavadinimą, jį gali sudaryti tik raidės ir tarpai! <p>";
 			}
       elseif ( strlen($countynameis) < 2 )
       {
